@@ -8,6 +8,21 @@ int sigcount = 0;
 int end_of_receiving = 0;
 pid_t sender_pid;
 
+int translate_mode(char *mode_name)
+{
+    if (mode_name == "kill")
+        return 0;
+    else if (mode_name == "sigqueue")
+        return 1;
+    else if (mode_name == "sigrt")
+        return 2;
+    else
+    {
+        printf("Wrong mode name\n");
+        exit(-1);
+    }
+}
+
 void handler(int signum, siginfo_t *info, void *ucontext_t)
 {
     switch (signum)
@@ -28,6 +43,7 @@ int main(int argc, char **argv)
 {
     printf("Catcher's PID: %d\n", getpid());
 
+    int mode = translate_mode(argv[1]);
     struct sigaction act;
     act.sa_flags = SA_SIGINFO;
     act.sa_sigaction = handler;
@@ -40,18 +56,38 @@ int main(int argc, char **argv)
     sigdelset(&mask, SIGUSR1);
     sigdelset(&mask, SIGUSR2);
 
-    printf("Initializing sender...\n");
-    execl("./sender", "./sender", getpid(), argv[1], NULL);
+    printf("Waiting for sender\n");
 
     while (!end_of_receiving)
         sigsuspend(&mask);
 
-    printf("Received SIGUSR2\nSending SIGUSR 1 back...");
+    printf("Received SIGUSR1 %d times\nReceived SIGUSR2\nSending SIGUSR 1 back...\n",
+        sigcount);
 
-    for (int i = 0; i < sigcount; i++)
-        kill(sender_pid, SIGUSR1);
+    switch (mode)
+    {
+        case 0:
+            for (int i = 0; i < sigcount; i++)
+                kill(sender_pid, SIGUSR1);
 
-    kill(sender_pid, SIGUSR2);
+            kill(sender_pid, SIGUSR2);
+            break;
+        case 1:
+            union sigval value;
+            for (int i = 0; i < sigcount; i++)
+                sigqueue(sender_pid, SIGUSR1, value);
 
+            sigqueue(sender_pid, SIGUSR2, value);
+            break;
+        case 2:
+            for (int i = 0; i < sigcount; i++)
+                kill(sender_pid, SIGRTMIN);
+
+            kill(sender_pid, SIGRTMAX);
+            break;
+        default:
+            break;
+    }
+    
     return 0;
 }

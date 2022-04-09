@@ -7,6 +7,21 @@
 int sigcount = 0;
 int end_of_receiving = 0;
 
+int translate_mode(char *mode_name)
+{
+    if (mode_name == "kill")
+        return 0;
+    else if (mode_name == "sigqueue")
+        return 1;
+    else if (mode_name == "sigrt")
+        return 2;
+    else
+    {
+        printf("Wrong mode name\n");
+        exit(-1);
+    }
+}
+
 void handler(int signum)
 {
     switch (signum)
@@ -25,8 +40,9 @@ void handler(int signum)
 int main(int argc, char **argv)
 {
     printf("Sender is alive\nSender's PID: %d\n", getpid());
-    int num_of_signals = atoi(argv[2]);
     pid_t catcher_pid = atoi(argv[1]);
+    int num_of_signals = atoi(argv[2]);
+    int mode = translate_mode(argv[3]);
 
     struct sigaction act;
     act.sa_handler = handler;
@@ -39,7 +55,7 @@ int main(int argc, char **argv)
     sigdelset(&mask, SIGUSR1);
     sigdelset(&mask, SIGUSR2);
 
-    printf("Sending SIGUSR1...\n");
+    printf("Sending SIGUSR1\n");
     for (int i = 0; i < num_of_signals; i++)
         kill(catcher_pid, SIGUSR1);
 
