@@ -1,0 +1,24 @@
+ignore 
+In main process
+In child
+In new program
+
+handler 
+In main process
+I received the signal!
+In child
+I received the signal!
+
+mask 
+In main process
+In child
+In new program
+
+pending 
+In main process
+SIGUSR1 is pending.
+In child
+SIGUSR1 is not pending.
+In new program
+SIGUSR1 is pending.
+

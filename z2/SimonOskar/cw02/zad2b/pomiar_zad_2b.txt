@@ -1,0 +1,6 @@
+Times using system functions:
+Overall time: 6
+Total kernel time: 0
+Total user time: 0
+Kernel time: 0
+User time: 5
