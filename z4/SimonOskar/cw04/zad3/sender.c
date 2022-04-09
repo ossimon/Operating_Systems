@@ -37,6 +37,7 @@ int main(int argc, char **argv)
     pid_t catcher_pid = atoi(argv[1]);
     int num_of_signals = atoi(argv[2]);
     int mode = translate_mode(argv[3]);
+    printf("Mode selected: %d\n", mode);
 
     struct sigaction act;
     act.sa_handler = handler;
@@ -63,24 +64,24 @@ int main(int argc, char **argv)
     switch (mode)
     {
     case 0:
-        printf("Sending SIGUSR1\n");
-        for (int i = 0; i < sigcount; i++)
+        printf("Sending SIGUSR1 %d times\n", num_of_signals);
+        for (int i = 0; i < num_of_signals; i++)
             kill(catcher_pid, SIGUSR1);
 
         printf("Sending SIGUSR2\n");
         kill(catcher_pid, SIGUSR2);
         break;
     case 1:
-        printf("Sending SIGUSR1\n");
-        for (int i = 0; i < sigcount; i++)
+        printf("Sending SIGUSR1 %d times\n", num_of_signals);
+        for (int i = 0; i < num_of_signals; i++)
             sigqueue(catcher_pid, SIGUSR1, value);
 
         printf("Sending SIGUSR2\n");
         sigqueue(catcher_pid, SIGUSR2, value);
         break;
     case 2:
-        printf("Sending SIGRTMIN\n");
-        for (int i = 0; i < sigcount; i++)
+        printf("Sending SIGRTMIN %d times\n", num_of_signals);
+        for (int i = 0; i < num_of_signals; i++)
             kill(catcher_pid, SIGRTMIN);
 
         printf("Sending SIGRTMAX\n");
@@ -95,5 +96,6 @@ int main(int argc, char **argv)
 
     printf("Sender sent %d signals\nReceived %d signals\n",
            num_of_signals, sigcount);
+
     return 0;
 }

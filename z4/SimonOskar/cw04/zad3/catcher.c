@@ -9,7 +9,6 @@ int sigcount = 0;
 int end_of_receiving = 0;
 pid_t sender_pid;
 
-
 int translate_mode(char *mode_name)
 {
     if (strcmp(mode_name, "kill") == 0)
@@ -35,10 +34,12 @@ void handler(int signum, siginfo_t *info, void *ucontext_t)
         sender_pid = info->si_pid;
     }
 }
+
 int main(int argc, char **argv)
 {
     printf("Catcher's PID: %d\n", getpid());
     int mode = translate_mode(argv[1]);
+    printf("Mode selected: %d\n", mode);
 
     struct sigaction act;
     act.sa_flags = SA_SIGINFO;
