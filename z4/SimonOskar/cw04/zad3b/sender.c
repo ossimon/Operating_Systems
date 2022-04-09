@@ -15,7 +15,10 @@ int translate_mode(char *mode_name)
     else if (strcmp(mode_name, "sigqueue") == 0)
         return 1;
     else if (strcmp(mode_name, "sigrt") == 0)
+    {
+        sigcount--;
         return 2;
+    }
     else
     {
         printf("Wrong mode name\n");
@@ -23,12 +26,16 @@ int translate_mode(char *mode_name)
     }
 }
 
-void handler(int signum)
+void handler(int signum, siginfo_t *info, void *ucontext_t)
 {
     if (signum == SIGRTMIN || signum == SIGUSR1)
         sigcount++;
     else
         end_of_receiving = 1;
+}
+
+void confirmation_handler(int signum, siginfo_t *info, void *ucontext_t)
+{
 }
 
 int main(int argc, char **argv)
@@ -40,10 +47,13 @@ int main(int argc, char **argv)
     printf("Mode selected: %d\n", mode);
 
     struct sigaction act;
-    act.sa_handler = handler;
+    act.sa_flags = SA_SIGINFO;
+    act.sa_sigaction = handler;
     sigemptyset(&act.sa_mask);
     sigset_t mask;
     sigfillset(&mask);
+    sigdelset(&mask, SIGUSR1);
+    sigdelset(&mask, SIGINT);
 
     if (mode == 2)
     {
@@ -54,11 +64,11 @@ int main(int argc, char **argv)
     }
     else
     {
-        sigdelset(&mask, SIGUSR1);
         sigdelset(&mask, SIGUSR2);
-        sigaction(SIGUSR1, &act, NULL);
         sigaction(SIGUSR2, &act, NULL);
     }
+    act.sa_sigaction = confirmation_handler;
+    sigaction(SIGUSR1, &act, NULL);
 
     union sigval value;
     switch (mode)
@@ -66,15 +76,20 @@ int main(int argc, char **argv)
     case 0:
         printf("Sending SIGUSR1 %d times\n", num_of_signals);
         for (int i = 0; i < num_of_signals; i++)
+        {
             kill(catcher_pid, SIGUSR1);
-
+            sigsuspend(&mask);
+        }
         printf("Sending SIGUSR2\n");
         kill(catcher_pid, SIGUSR2);
         break;
     case 1:
         printf("Sending SIGUSR1 %d times\n", num_of_signals);
         for (int i = 0; i < num_of_signals; i++)
+        {
             sigqueue(catcher_pid, SIGUSR1, value);
+            sigsuspend(&mask);
+        }
 
         printf("Sending SIGUSR2\n");
         sigqueue(catcher_pid, SIGUSR2, value);
@@ -82,7 +97,10 @@ int main(int argc, char **argv)
     case 2:
         printf("Sending SIGRTMIN %d times\n", num_of_signals);
         for (int i = 0; i < num_of_signals; i++)
+        {
             kill(catcher_pid, SIGRTMIN);
+            sigsuspend(&mask);
+        }
 
         printf("Sending SIGRTMAX\n");
         kill(catcher_pid, SIGRTMAX);
@@ -91,8 +109,14 @@ int main(int argc, char **argv)
         break;
     }
 
+    act.sa_sigaction = handler;
+    sigaction(SIGUSR1, &act, NULL);
+
     while (!end_of_receiving)
+    {
         sigsuspend(&mask);
+        kill(catcher_pid, SIGUSR1);
+    }
 
     printf("Sender sent %d signals\nReceived %d signals\n",
            num_of_signals, sigcount);

@@ -26,13 +26,15 @@ int translate_mode(char *mode_name)
 
 void handler(int signum, siginfo_t *info, void *ucontext_t)
 {
+    sender_pid = info->si_pid;
     if (signum == SIGRTMIN || signum == SIGUSR1)
         sigcount++;
     else
-    {
         end_of_receiving = 1;
-        sender_pid = info->si_pid;
-    }
+}
+
+void confirmation_handler(int signum, siginfo_t *info, void *ucontext_t)
+{
 }
 
 int main(int argc, char **argv)
@@ -47,6 +49,8 @@ int main(int argc, char **argv)
     sigemptyset(&act.sa_mask);
     sigset_t mask;
     sigfillset(&mask);
+    sigdelset(&mask, SIGUSR1);
+    sigdelset(&mask, SIGINT);
 
     if (mode == 2)
     {
@@ -57,7 +61,6 @@ int main(int argc, char **argv)
     }
     else
     {
-        sigdelset(&mask, SIGUSR1);
         sigdelset(&mask, SIGUSR2);
         sigaction(SIGUSR1, &act, NULL);
         sigaction(SIGUSR2, &act, NULL);
@@ -66,33 +69,48 @@ int main(int argc, char **argv)
     printf("Waiting for sender\n");
 
     while (!end_of_receiving)
+    {
         sigsuspend(&mask);
+        kill(sender_pid, SIGUSR1);
+    }
 
     if (mode == 2)
         printf("Received SIGRTMIN %d times\nReceived SIGRTMAX\nSending SIGRTMAX back...\n",
-           sigcount);
+               sigcount);
     else
         printf("Received SIGUSR1 %d times\nReceived SIGUSR2\nSending SIGUSR1 back...\n",
-           sigcount);
-    
+               sigcount);
+
+    act.sa_sigaction = confirmation_handler;
+    sigaction(SIGUSR1, &act, NULL);
+
     union sigval value;
     switch (mode)
     {
     case 0:
         for (int i = 0; i < sigcount; i++)
+        {
             kill(sender_pid, SIGUSR1);
+            sigsuspend(&mask);
+        }
 
         kill(sender_pid, SIGUSR2);
         break;
     case 1:
         for (int i = 0; i < sigcount; i++)
+        {
             sigqueue(sender_pid, SIGUSR1, value);
+            sigsuspend(&mask);
+        }
 
         sigqueue(sender_pid, SIGUSR2, value);
         break;
     case 2:
         for (int i = 0; i < sigcount; i++)
+        {
             kill(sender_pid, SIGRTMIN);
+            sigsuspend(&mask);
+        }
 
         kill(sender_pid, SIGRTMAX);
         break;
