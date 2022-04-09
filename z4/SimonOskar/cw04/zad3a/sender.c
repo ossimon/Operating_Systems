@@ -23,7 +23,7 @@ int translate_mode(char *mode_name)
     }
 }
 
-void handler(int signum)
+void handler(int signum, siginfo_t *info, void *ucontext_t)
 {
     if (signum == SIGRTMIN || signum == SIGUSR1)
         sigcount++;
@@ -40,10 +40,12 @@ int main(int argc, char **argv)
     printf("Mode selected: %d\n", mode);
 
     struct sigaction act;
-    act.sa_handler = handler;
+    act.sa_flags = SA_SIGINFO;
+    act.sa_sigaction = handler;
     sigemptyset(&act.sa_mask);
     sigset_t mask;
     sigfillset(&mask);
+    sigdelset(&mask, SIGINT);
 
     if (mode == 2)
     {

@@ -47,6 +47,7 @@ int main(int argc, char **argv)
     sigemptyset(&act.sa_mask);
     sigset_t mask;
     sigfillset(&mask);
+    sigdelset(&mask, SIGINT);
 
     if (mode == 2)
     {
