@@ -24,17 +24,10 @@ int translate_mode(char *mode_name)
 
 void handler(int signum)
 {
-    switch (signum)
-    {
-    case SIGUSR1:
+    if (signum == SIGRTMIN || signum == SIGUSR1)
         sigcount++;
-        break;
-    case SIGUSR2:
+    else
         end_of_receiving = 1;
-        break;
-    default:
-        break;
-    }
 }
 
 int main(int argc, char **argv)
@@ -52,15 +45,47 @@ int main(int argc, char **argv)
 
     sigset_t mask;
     sigfillset(&mask);
-    sigdelset(&mask, SIGUSR1);
-    sigdelset(&mask, SIGUSR2);
+    if (mode == 2)
+    {
+        sigdelset(&mask, SIGRTMIN);
+        sigdelset(&mask, SIGRTMAX);
+    }
+    else
+    {
+        sigdelset(&mask, SIGUSR1);
+        sigdelset(&mask, SIGUSR2);
+    }
 
-    printf("Sending SIGUSR1\n");
-    for (int i = 0; i < num_of_signals; i++)
-        kill(catcher_pid, SIGUSR1);
+    switch (mode)
+    {
+    case 0:
+        printf("Sending SIGUSR1\n");
+        for (int i = 0; i < sigcount; i++)
+            kill(catcher_pid, SIGUSR1);
 
-    printf("Sending SIGUSR2\n");
-    kill(catcher_pid, SIGUSR2);
+        printf("Sending SIGUSR2\n");
+        kill(catcher_pid, SIGUSR2);
+        break;
+    case 1:
+        union sigval value;
+        printf("Sending SIGUSR1\n");
+        for (int i = 0; i < sigcount; i++)
+            sigqueue(catcher_pid, SIGUSR1, value);
+
+        printf("Sending SIGUSR2\n");
+        sigqueue(catcher_pid, SIGUSR2, value);
+        break;
+    case 2:
+        printf("Sending SIGRTMIN\n");
+        for (int i = 0; i < sigcount; i++)
+            kill(catcher_pid, SIGRTMIN);
+
+        printf("Sending SIGRTMAX\n");
+        kill(catcher_pid, SIGRTMAX);
+        break;
+    default:
+        break;
+    }
 
     while (!end_of_receiving)
         sigsuspend(&mask);

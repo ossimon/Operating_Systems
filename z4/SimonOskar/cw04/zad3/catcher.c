@@ -25,20 +25,14 @@ int translate_mode(char *mode_name)
 
 void handler(int signum, siginfo_t *info, void *ucontext_t)
 {
-    switch (signum)
-    {
-    case SIGUSR1:
+    if (signum == SIGRTMIN || signum == SIGUSR1)
         sigcount++;
-        break;
-    case SIGUSR2:
+    else
+    {
         end_of_receiving = 1;
         sender_pid = info->si_pid;
-        break;
-    default:
-        break;
     }
 }
-
 int main(int argc, char **argv)
 {
     printf("Catcher's PID: %d\n", getpid());
@@ -53,8 +47,16 @@ int main(int argc, char **argv)
 
     sigset_t mask;
     sigfillset(&mask);
-    sigdelset(&mask, SIGUSR1);
-    sigdelset(&mask, SIGUSR2);
+    if (mode == 2)
+    {
+        sigdelset(&mask, SIGRTMIN);
+        sigdelset(&mask, SIGRTMAX);
+    }
+    else
+    {
+        sigdelset(&mask, SIGUSR1);
+        sigdelset(&mask, SIGUSR2);
+    }
 
     printf("Waiting for sender\n");
 
@@ -62,32 +64,32 @@ int main(int argc, char **argv)
         sigsuspend(&mask);
 
     printf("Received SIGUSR1 %d times\nReceived SIGUSR2\nSending SIGUSR 1 back...\n",
-        sigcount);
+           sigcount);
 
     switch (mode)
     {
-        case 0:
-            for (int i = 0; i < sigcount; i++)
-                kill(sender_pid, SIGUSR1);
+    case 0:
+        for (int i = 0; i < sigcount; i++)
+            kill(sender_pid, SIGUSR1);
 
-            kill(sender_pid, SIGUSR2);
-            break;
-        case 1:
-            union sigval value;
-            for (int i = 0; i < sigcount; i++)
-                sigqueue(sender_pid, SIGUSR1, value);
+        kill(sender_pid, SIGUSR2);
+        break;
+    case 1:
+        union sigval value;
+        for (int i = 0; i < sigcount; i++)
+            sigqueue(sender_pid, SIGUSR1, value);
 
-            sigqueue(sender_pid, SIGUSR2, value);
-            break;
-        case 2:
-            for (int i = 0; i < sigcount; i++)
-                kill(sender_pid, SIGRTMIN);
+        sigqueue(sender_pid, SIGUSR2, value);
+        break;
+    case 2:
+        for (int i = 0; i < sigcount; i++)
+            kill(sender_pid, SIGRTMIN);
 
-            kill(sender_pid, SIGRTMAX);
-            break;
-        default:
-            break;
+        kill(sender_pid, SIGRTMAX);
+        break;
+    default:
+        break;
     }
-    
+
     return 0;
 }
