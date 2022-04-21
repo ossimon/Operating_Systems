@@ -1,0 +1,7 @@
+cat /etc/passwd | wc -l
+ls | grep '^a'
+grep 11
+
+0 2
+0
+1
