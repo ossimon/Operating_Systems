@@ -1,6 +1,6 @@
 all: sender.c catcher.c
-	gcc sender.c -o sender -Wall
-	gcc catcher.c -o catcher -Wall
+	gcc sender.c -o sender.out -Wall
+	gcc catcher.c -o catcher.out -Wall
 
 clean:
-	rm -f sender catcher
+	rm -f sender.out catcher.out

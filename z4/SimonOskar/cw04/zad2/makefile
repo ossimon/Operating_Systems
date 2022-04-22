@@ -1,5 +1,5 @@
  main: main.c
-	gcc main.c -o main -Wall
+	gcc main.c -o main.out -Wall
 
 clean:
-	rm -f main
+	rm -f main.out

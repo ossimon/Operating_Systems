@@ -1,5 +1,5 @@
 nftwMain: nftwMain.c
-	gcc nftwMain.c -o nftwMain -Wall
+	gcc nftwMain.c -o nftwMain.out -Wall
 
 clean:
-	rm -f nftwMain
+	rm -f nftwMain.out

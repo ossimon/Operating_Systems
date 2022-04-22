@@ -1,6 +1,6 @@
 main: main.c exec.c
-	gcc main.c -o main -Wall
-	gcc exec.c -o exec -Wall
+	gcc main.c -o main.out -Wall
+	gcc exec.c -o exec.out -Wall
 
 tests: main
 	for action in ignore handler mask pending ; do \
@@ -10,4 +10,4 @@ tests: main
 	done
 
 clean:
-	rm -f exec main
+	rm -f exec.out main.out

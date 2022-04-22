@@ -1,6 +1,5 @@
 sysMain: sysMain.c
-	gcc sysMain.c -o sysMain -Wall
+	gcc sysMain.c -o sysMain.out -Wall
 
 clean:
-	rm -f sysMain
-	rm -f pomiar_zad_1a.txt
+	rm -f sysMain.out pomiar_zad_1a.txt

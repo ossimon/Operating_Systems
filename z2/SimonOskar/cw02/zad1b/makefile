@@ -1,6 +1,5 @@
 libMain: libMain.c
-	gcc libMain.c -o libMain -Wall
+	gcc libMain.c -o libMain.out -Wall
 
 clean:
-	rm -f libMain
-	rm -f pomiar_zad_1b.txt
+	rm -f libMain.out pomiar_zad_1b.txt
