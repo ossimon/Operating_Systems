@@ -1,7 +1,7 @@
-cat /etc/passwd | wc -l
-ls | grep '^a'
-grep 11
+s1 = cat /etc/passwd | wc -l
+s2 = ls | grep '^a'
+s3 = grep 11
 
-0 2
-0
-1
+s1 | s3
+s1
+s2
