@@ -1,6 +1,6 @@
 s1 = cat /etc/passwd | wc -l
-s2 = ls | grep '^a'
-s3 = grep 11
+s2 = ls | grep ^m
+s3 = grep [0-9]
 
 s1 | s3
 s1
