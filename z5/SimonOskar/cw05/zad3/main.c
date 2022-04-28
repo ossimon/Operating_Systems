@@ -40,6 +40,7 @@ int main(int argc, char **argv)
     for (int i = 0; i < number_of_sources; i++)
         wait(NULL);
 
+    sleep(2);
     kill(consumer_pid, SIGINT);
     wait(NULL);
     return 0;

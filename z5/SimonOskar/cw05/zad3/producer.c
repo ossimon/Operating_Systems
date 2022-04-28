@@ -57,9 +57,8 @@ int main(int argc, char **argv)
         if (bytes > 0)
         {
             sprintf(to_send, "%d%s", ind, package);
-            printf("%s\t", to_send);
             bytes = fwrite(to_send, sizeof(char), strlen(to_send), fifo);
-            printf("bytes sent: %d\n", bytes);
+            printf("Bytes sent: %s\n", to_send);
         }
         else
             exit(EXIT_SUCCESS);

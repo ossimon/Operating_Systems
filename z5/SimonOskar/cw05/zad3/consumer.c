@@ -16,7 +16,7 @@ void handler(int signum)
     printf("SIGINT received.\n");
     for (int i = 0; i < 100; i++)
         if (lines[i][0] != '\0')
-            printf("%d.%s\n", i, lines[i]);
+            printf("%d. %s\n", i, lines[i]);
 
     FILE *file = fopen(destination, "w+");
     if (!file)
