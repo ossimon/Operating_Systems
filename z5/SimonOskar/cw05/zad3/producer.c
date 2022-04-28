@@ -9,9 +9,6 @@
 
 int main(int argc, char **argv)
 {
-    // if (strcmp(argv[2], "0") == 0)
-    //     for (int i = 0; i < argc; i++)
-    //         printf("%s\n", argv[i]);
 
     int ind = atoi(argv[2]);
     int n = atoi(argv[4]);
@@ -31,7 +28,6 @@ int main(int argc, char **argv)
         fprintf(stderr, "Couldn't open file %s\n", argv[3]);
         exit(EXIT_FAILURE);
     }
-
 
     struct timespec ts0;
     struct timespec ts1;

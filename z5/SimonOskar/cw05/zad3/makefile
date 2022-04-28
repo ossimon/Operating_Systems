@@ -17,4 +17,4 @@ test: main.c consumer.c producer.c
 	./main.out
 
 clean:
-	rm -f *.out
+	rm -f *.out fifo

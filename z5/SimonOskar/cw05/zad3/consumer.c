@@ -14,9 +14,6 @@ char lines[100][1000];
 void handler(int signum)
 {
     printf("SIGINT received.\n");
-    for (int i = 0; i < 100; i++)
-        if (lines[i][0] != '\0')
-            printf("%d. %s\n", i, lines[i]);
 
     FILE *file = fopen(destination, "w+");
     if (!file)
@@ -39,9 +36,6 @@ void handler(int signum)
 
 int main(int argc, char **argv)
 {
-    // Print args
-    // for (int i = 0; i < argc; i++)
-    //     printf("%s\n", argv[i]);
     int n = atoi(argv[3]);
     strcpy(destination, argv[2]);
 
@@ -76,7 +70,6 @@ int main(int argc, char **argv)
             buf[i] = '\0';
 
         // Read FIFO
-        // printf("Attempting to read fifo\n");
         bytes = fread(buf, sizeof(char), n + 1, fifo);
         printf("Bytes received: %s\n", buf);
 
