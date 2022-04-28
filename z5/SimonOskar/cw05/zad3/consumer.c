@@ -16,8 +16,7 @@ void handler(int signum)
     printf("SIGINT received.\n");
     for (int i = 0; i < 100; i++)
         if (lines[i][0] != '\0')
-            printf("%s\n", lines[i]);
-    // printf("that's all\n");
+            printf("%d.%s\n", i, lines[i]);
 
     FILE *file = fopen(destination, "w+");
     if (!file)
@@ -26,10 +25,14 @@ void handler(int signum)
         exit(EXIT_FAILURE);
     }
     int i = 0;
-    while (i < 100 && lines[i][0] != '\0')
+    while (i < 100)
     {
-        fwrite(lines[i], sizeof(char), strlen(lines[i]), file);
-        fputc('\n', file);
+        if (lines[i][0] != '\0')
+        {
+            fwrite(lines[i], sizeof(char), strlen(lines[i]), file);
+            fputc('\n', file);
+        }
+        i++;
     }
     exit(EXIT_SUCCESS);
 }
@@ -37,8 +40,8 @@ void handler(int signum)
 int main(int argc, char **argv)
 {
     // Print args
-        // for (int i = 0; i < argc; i++)
-        //     printf("%s\n", argv[i]);
+    // for (int i = 0; i < argc; i++)
+    //     printf("%s\n", argv[i]);
     int n = atoi(argv[3]);
     strcpy(destination, argv[2]);
 
@@ -66,14 +69,14 @@ int main(int argc, char **argv)
             lines[i][j] = '\0';
 
     // Loop
-    while(1)
-    {   
+    while (1)
+    {
         // Clear buffer
         for (int i = 0; i < PIPE_BUF; i++)
             buf[i] = '\0';
 
         // Read FIFO
-        printf("Attempting to read fifo\n");
+        // printf("Attempting to read fifo\n");
         bytes = fread(buf, sizeof(char), n + 1, fifo);
         printf("Bytes received: %s\n", buf);
 

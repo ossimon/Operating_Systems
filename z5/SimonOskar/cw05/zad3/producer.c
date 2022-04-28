@@ -28,7 +28,7 @@ int main(int argc, char **argv)
     FILE *file = fopen(argv[3], "r+");
     if (!file)
     {
-        fprintf(stderr, "Couldn't open file!\n");
+        fprintf(stderr, "Couldn't open file %s\n", argv[3]);
         exit(EXIT_FAILURE);
     }
 

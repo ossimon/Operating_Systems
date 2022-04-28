@@ -12,5 +12,9 @@ consumer: consumer.c
 producer: producer.c
 	gcc producer.c -o producer.out -Wall
 
+test: main.c consumer.c producer.c
+	make all
+	./main.out
+
 clean:
 	rm -f *.out
