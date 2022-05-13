@@ -9,7 +9,8 @@
 
 static key_t server_key;
 static int server_qid;
-static int no_clients = 0;
+static int max_client = 0;
+static int no_clients = 1;
 static int clients[MAX_NO_CLIENTS];
 
 void cleanup()
@@ -23,51 +24,103 @@ void cleanup()
     exit(EXIT_SUCCESS);
 }
 
-Msg_Type receive_msg()
+void handle_msg(Message msg)
 {
-    Message msg;
     int client_qid;
     char text[MAX_MSG_LEN];
-    if (msgrcv(server_qid, &msg, MESSAGE_SIZE, INIT, 0) != -1)
+    key_t client_key;
+    switch (msg.mtype)
     {
-        key_t client_key;
+    case STOP:
+        no_clients--;
+        clients[msg.sender_id] = -1;
+        if (no_clients < 1)
+            exit(EXIT_SUCCESS);
+        break;
+
+    case INIT:
         client_key = atoi(msg.mtext);
-        printf("Got key: \"%d\"\n", client_key);
+        printf("Initializing key: \"%d\"\n", client_key);
         if ((client_qid = msgget(client_key, 0)) == -1)
         {
             perror("msgget error");
             exit(EXIT_FAILURE);
         }
         msg.mtype = INIT;
-        sprintf(msg.mtext, "%d", no_clients);
+        sprintf(msg.mtext, "%d", max_client);
         if (msgsnd(client_qid, &msg, MESSAGE_SIZE, 0) == -1)
         {
             perror("msgsend error");
             exit(EXIT_FAILURE);
         }
-        clients[no_clients++] = client_qid;
+        clients[max_client++] = client_qid;
+        no_clients++;
+        break;
 
-        return INIT;
-    }
-    else if (msgrcv(server_qid, &msg, MESSAGE_SIZE, LIST, 0) != -1)
-    {
-        client_qid = msg.sender_id;
+    case LIST:
+        client_qid = clients[msg.sender_id];
+        msg.mtext[0] = '\0';
         for (int i = 0; i < MAX_NO_CLIENTS; i++)
         {
             if (clients[i] != -1)
             {
-                sprintf(text, "%d ", clients[i]);
+                sprintf(text, "%d\n", clients[i]);
                 strcat(msg.mtext, text);
             }
         }
-        printf("Sending \"%s\"\n", msg.mtext);
+        printf("Sending LIST to %d\n", client_qid);
+        msg.mtext[strlen(msg.mtext) - 1] = '\0';
+        if (msgsnd(client_qid, &msg, MESSAGE_SIZE, 0) == -1)
+        {
+            perror("msgsend error");
+            exit(EXIT_FAILURE);
+        }
+        break;
+
+    case TOONE:
+        client_qid = clients[msg.receiver_id];
+        printf("Sending \"%s\" to %d\n", msg.mtext, msg.receiver_id);
+        if (msgsnd(client_qid, &msg, MESSAGE_SIZE, 0) == -1)
+        {
+            perror("msgsend error");
+            exit(EXIT_FAILURE);
+        }
+        break;
+
+    case TOALL:
+        printf("Sending \"%s\" to %d\n", msg.mtext, msg.receiver_id);
+        for (int i = 0; i < MAX_NO_CLIENTS; i++)
+        {
+            client_qid = clients[i];
+            if (client_qid != -1)
+            {
+                if (msgsnd(client_qid, &msg, MESSAGE_SIZE, 0) == -1)
+                {
+                    perror("msgsend error");
+                    exit(EXIT_FAILURE);
+                }
+            }
+        }
+        break;
+
+    default:
+        break;
     }
-    return LAST_TYPE;
 }
 
-void handle_msg()
+Msg_Type receive_msg()
 {
-
+    Message msg;
+    if (msgrcv(server_qid, &msg, MESSAGE_SIZE, STOP, IPC_NOWAIT) == -1 &&
+        msgrcv(server_qid, &msg, MESSAGE_SIZE, LIST, IPC_NOWAIT) == -1 &&
+        msgrcv(server_qid, &msg, MESSAGE_SIZE, INIT, IPC_NOWAIT) == -1 &&
+        msgrcv(server_qid, &msg, MESSAGE_SIZE, TOALL, IPC_NOWAIT) == -1 &&
+        msgrcv(server_qid, &msg, MESSAGE_SIZE, TOONE, IPC_NOWAIT) == -1)
+    {
+        return LAST_TYPE;
+    }
+    handle_msg(msg);
+    return msg.mtype;
 }
 
 int main(int argc, char **argv)
@@ -78,7 +131,6 @@ int main(int argc, char **argv)
     for (int i = 0; i < MAX_NO_CLIENTS; i++)
         clients[i] = -1;
 
-    //
     if ((server_key = ftok(HOME_PATH, PROJ_ID)) == -1)
     {
         fprintf(stderr, "ftok error\n");
@@ -87,7 +139,6 @@ int main(int argc, char **argv)
 
     if ((server_qid = msgget(server_key, IPC_CREAT | PERMISSIONS)) == -1)
     {
-        // fprintf(stderr, "msgget error\n");
         perror("msgget error");
         exit(EXIT_FAILURE);
     }

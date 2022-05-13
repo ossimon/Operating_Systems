@@ -30,6 +30,6 @@ const char *type_strings[LAST_TYPE] = {
     "",
     "INIT",
     "LIST",
-    "TOALL",
-    "TOONE",
+    "2ALL",
+    "2ONE",
     "STOP"};
