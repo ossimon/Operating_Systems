@@ -3,7 +3,6 @@
 #define MESSAGE_SIZE (sizeof(Message) - sizeof(long))
 #define HOME_PATH getenv("HOME")
 
-// const char *SERVER_PATH = "./server.c";
 const char PROJ_ID = 'o';
 const int PERMISSIONS = 0666;
 

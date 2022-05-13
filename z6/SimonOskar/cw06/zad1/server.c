@@ -9,8 +9,8 @@
 
 static key_t server_key;
 static int server_qid;
-static int max_client = 0;
-static int no_clients = 1;
+int max_client = 0;
+static int no_clients = 0;
 static int clients[MAX_NO_CLIENTS];
 
 void cleanup()
@@ -21,7 +21,8 @@ void cleanup()
     }
     else
         printf("Server clean. Exiting.\n");
-    exit(EXIT_SUCCESS);
+    
+    _exit(EXIT_SUCCESS);
 }
 
 void handle_msg(Message msg)
@@ -33,6 +34,7 @@ void handle_msg(Message msg)
     {
     case STOP:
         no_clients--;
+        printf("no clients: %d\n", no_clients);
         clients[msg.sender_id] = -1;
         if (no_clients < 1)
             exit(EXIT_SUCCESS);
@@ -64,12 +66,13 @@ void handle_msg(Message msg)
         {
             if (clients[i] != -1)
             {
-                sprintf(text, "%d\n", clients[i]);
+                sprintf(text, "%d\n", i);
                 strcat(msg.mtext, text);
             }
         }
         printf("Sending LIST to %d\n", client_qid);
         msg.mtext[strlen(msg.mtext) - 1] = '\0';
+        msg.sender_id = -1;
         if (msgsnd(client_qid, &msg, MESSAGE_SIZE, 0) == -1)
         {
             perror("msgsend error");
@@ -88,11 +91,11 @@ void handle_msg(Message msg)
         break;
 
     case TOALL:
-        printf("Sending \"%s\" to %d\n", msg.mtext, msg.receiver_id);
+        printf("Sending \"%s\" to all\n", msg.mtext);
         for (int i = 0; i < MAX_NO_CLIENTS; i++)
         {
             client_qid = clients[i];
-            if (client_qid != -1)
+            if (client_qid != -1 && client_qid != clients[msg.sender_id])
             {
                 if (msgsnd(client_qid, &msg, MESSAGE_SIZE, 0) == -1)
                 {

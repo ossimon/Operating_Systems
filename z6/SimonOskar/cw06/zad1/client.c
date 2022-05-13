@@ -20,9 +20,9 @@ void cleanup()
     msg.mtype = STOP;
     msgsnd(server_qid, &msg, MESSAGE_SIZE, 0);
     msgctl(client_qid, IPC_RMID, NULL);
-    printf("Client clean. Exiting.\n");
+    printf("\nClient clean. Exiting.\n");
 
-    exit(EXIT_SUCCESS);
+    _exit(EXIT_SUCCESS);
 }
 
 void init_q()
@@ -62,7 +62,6 @@ void connect_to_server()
 
     if (msgsnd(server_qid, &msg, MESSAGE_SIZE, 0) == -1)
     {
-        // fprintf(stderr, "msgsnd error.\nserver qid: %d, msg text: %s msg type: %ld, msg size: %ld\n", server_qid, msg.mtext, msg.mtype, MESSAGE_SIZE);
         perror("msgsnd error");
         exit(EXIT_FAILURE);
     }
@@ -88,7 +87,6 @@ int main(int argc, char **argv)
 
     char msg_type_str[100];
     Message msg;
-    msg.sender_id = client_id;
     while (1)
     {
         if (msgrcv(client_qid, &msg, MESSAGE_SIZE, LIST, IPC_NOWAIT) != -1 ||
@@ -98,12 +96,8 @@ int main(int argc, char **argv)
             printf("Received message:\n\"%s\"\nFrom: %d\n", msg.mtext, msg.sender_id);
         }
 
+        printf("Enter message type: ");
         scanf("%s", msg_type_str);
-        if (msg_type_str[0] == 'r' || msg_type_str[0] == 'R')
-        {
-            sleep(1);
-            continue;
-        }
         msg.mtype = FIRST_TYPE;
         for (int i = 0; i < LAST_TYPE; i++)
         {
@@ -113,11 +107,12 @@ int main(int argc, char **argv)
                 break;
             }
         }
-        // printf("Type: %ld\n", msg.mtype);
         
+        msg.sender_id = client_id;
         switch (msg.mtype)
         {
             case TOONE:
+                printf("Enter receiver (id) and your message: ");
                 scanf("%d%s", &msg.receiver_id, msg.mtext);
                 if (msgsnd(server_qid, &msg, MESSAGE_SIZE, 0) == -1)
                 {
@@ -129,6 +124,7 @@ int main(int argc, char **argv)
                 break;
 
             case TOALL:
+                printf("Enter your message: ");
                 scanf("%s", msg.mtext);
                 if (msgsnd(server_qid, &msg, MESSAGE_SIZE, 0) == -1)
                 {
@@ -147,7 +143,9 @@ int main(int argc, char **argv)
                     exit(EXIT_FAILURE);
                 }
                 else
-                    printf("Sent %s to %d\n", type_strings[msg.mtype], server_qid);
+                    printf("Sent %s to server\n", type_strings[msg.mtype]);
+                break;
+            default:
                 break;
         }
         sleep(1);
