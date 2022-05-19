@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/shm.h>
+#include <wait.h>
 #include "common.h"
 
 int oven_sem_id;
@@ -23,6 +24,7 @@ void handler()
 int main(int argc, char **argv)
 {
     atexit(handler);
+    signal(SIGINT, handler);
 
     // Reading input
     if (argc != 3)
@@ -48,6 +50,13 @@ int main(int argc, char **argv)
         perror("Semget error");
         exit(EXIT_FAILURE);
     }
+    union semun semopts;
+    semopts.val = 1;
+    if (semctl(oven_sem_id, 0, SETVAL, semopts) == -1)
+    {
+        perror("Semctl error");
+        exit(EXIT_FAILURE);
+    }
     printf("Oven semaphore created! Sem id: %d\n", oven_sem_id);
 
     // Generating oven memory key
@@ -58,7 +67,7 @@ int main(int argc, char **argv)
         exit(EXIT_FAILURE);
     }
     // Creating oven shared memory
-    if ((oven_shm_id = shmget(oven_shm_key, (OVEN_CAPACITY + 2) * sizeof(int), IPC_CREAT | IPC_EXCL | PERMISSIONS)) == -1)
+    if ((oven_shm_id = shmget(oven_shm_key, (OVEN_CAPACITY + 1) * sizeof(int), IPC_CREAT | IPC_EXCL | PERMISSIONS)) == -1)
     {
         perror("Shmget error");
         exit(EXIT_FAILURE);
@@ -77,6 +86,11 @@ int main(int argc, char **argv)
     if ((table_sem_id = semget(table_sem_key, 1, IPC_CREAT | IPC_EXCL | PERMISSIONS)) == -1)
     {
         perror("Semget error");
+        exit(EXIT_FAILURE);
+    }
+    if (semctl(table_sem_id, 0, SETVAL, semopts) == -1)
+    {
+        perror("Semctl error");
         exit(EXIT_FAILURE);
     }
     printf("Table semaphore created! Sem id: %d\n", table_sem_id);
@@ -121,14 +135,9 @@ int main(int argc, char **argv)
         table[i] = -1;
     }
 
-    int oldest_pizza = OVEN_CAPACITY - 1;
-    int newest_pizza = OVEN_CAPACITY - 1;
-    oven[OVEN_CAPACITY] = oldest_pizza;
-    oven[OVEN_CAPACITY + 1] = newest_pizza;
-    oldest_pizza = TABLE_CAPACITY - 1;
-    newest_pizza = TABLE_CAPACITY - 1;
-    table[TABLE_CAPACITY] = oldest_pizza;
-    table[TABLE_CAPACITY + 1] = newest_pizza;
+    oven[OVEN_CAPACITY] = 0;
+    table[TABLE_CAPACITY] = 0;
+    table[TABLE_CAPACITY + 1] = 0;
 
     // Id's to str
     char oven_sem_str[MAX_ID_LEN], oven_shm_str[MAX_ID_LEN];
@@ -143,15 +152,22 @@ int main(int argc, char **argv)
     {
         if (fork() == 0)
         {
-            printf("Cook no: %d\n", i);
             execl("./cook.out", "./cook.out", oven_sem_str, oven_shm_str, table_sem_str, table_shm_str, NULL);
         }
     }
+
     // Hiring the delivery guys
+    for (int i = 0; i < dgno; i++)
+    {
+        if (fork() == 0)
+        {
+            execl("./delivery_guy.out", "./delivery_guy.out", table_sem_str, table_shm_str, NULL);
+        }
+    }
 
     // Waiting for the employees to go home
     for (int i = 0; i < cookno + dgno; i++)
-        wait();
+        wait(NULL);
 
     return 0;
 }

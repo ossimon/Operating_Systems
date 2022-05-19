@@ -1,0 +1,263 @@
+Dla N = 2 i M = 2:
+Przy niewielkich wartosciach N i M piekarnik nigdy nie zostaje zapelniony.
+Ze wzgledu na czas dojazdu dostawcy, ktory jest wiekszy od czasu przygotowania pizzy stolik szybko sie zapelnia i nigdy nie sa na nim mniej niz 3 pizze.
+
+Pid: 26698 timestamp: 0.351 Preparing the pizza: 6
+Pid: 26699 timestamp: 2.008 Baking the pizza: 6 Pizzas in the oven: 1
+Pid: 26698 timestamp: 2.009 Baking the pizza: 6 Pizzas in the oven: 2
+Pid: 26699 timestamp: 6.016 Taking pizza out: 6 Pizzas in the oven: 1
+Pid: 26699 timestamp: 6.016 Putting pizza on the table: 6 Pizzas on the table: 1
+Pid: 26699 timestamp: 6.016 Preparing the pizza: 0
+Pid: 26698 timestamp: 6.017 Taking pizza out: 6 Pizzas in the oven: 0
+Pid: 26698 timestamp: 6.017 Putting pizza on the table: 6 Pizzas on the table: 2
+Pid: 26698 timestamp: 6.017 Preparing the pizza: 0
+Pid: 26700 timestamp: 6.090 Taking pizza from the table: 6 Pizzas on the table: 1
+Pid: 26701 timestamp: 6.090 Taking pizza from the table: 6 Pizzas on the table: 0
+Pid: 26699 timestamp: 7.442 Baking the pizza: 0 Pizzas in the oven: 1
+Pid: 26698 timestamp: 7.442 Baking the pizza: 0 Pizzas in the oven: 2
+Pid: 26701 timestamp: 10.546 Giving pizza to the customer: 6
+Pid: 26700 timestamp: 10.546 Giving pizza to the customer: 6
+Pid: 26699 timestamp: 12.104 Taking pizza out: 0 Pizzas in the oven: 1
+Pid: 26699 timestamp: 12.104 Putting pizza on the table: 0 Pizzas on the table: 1
+Pid: 26699 timestamp: 12.104 Preparing the pizza: 8
+Pid: 26698 timestamp: 12.105 Taking pizza out: 0 Pizzas in the oven: 0
+Pid: 26698 timestamp: 12.105 Putting pizza on the table: 0 Pizzas on the table: 2
+Pid: 26698 timestamp: 12.105 Preparing the pizza: 8
+Pid: 26699 timestamp: 13.981 Baking the pizza: 8 Pizzas in the oven: 1
+Pid: 26698 timestamp: 13.982 Baking the pizza: 8 Pizzas in the oven: 2
+Pid: 26701 timestamp: 15.077 Taking pizza from the table: 0 Pizzas on the table: 1
+Pid: 26700 timestamp: 15.077 Taking pizza from the table: 0 Pizzas on the table: 0
+Pid: 26699 timestamp: 18.542 Taking pizza out: 8 Pizzas in the oven: 1
+Pid: 26699 timestamp: 18.542 Putting pizza on the table: 8 Pizzas on the table: 1
+Pid: 26699 timestamp: 18.542 Preparing the pizza: 2
+Pid: 26698 timestamp: 18.543 Taking pizza out: 8 Pizzas in the oven: 0
+Pid: 26698 timestamp: 18.543 Putting pizza on the table: 8 Pizzas on the table: 2
+Pid: 26698 timestamp: 18.543 Preparing the pizza: 2
+Pid: 26701 timestamp: 19.593 Giving pizza to the customer: 0
+Pid: 26700 timestamp: 19.593 Giving pizza to the customer: 0
+Pid: 26699 timestamp: 19.693 Baking the pizza: 2 Pizzas in the oven: 1
+Pid: 26698 timestamp: 19.693 Baking the pizza: 2 Pizzas in the oven: 2
+Pid: 26699 timestamp: 23.808 Taking pizza out: 2 Pizzas in the oven: 1
+Pid: 26699 timestamp: 23.808 Putting pizza on the table: 2 Pizzas on the table: 3
+Pid: 26699 timestamp: 23.808 Preparing the pizza: 7
+Pid: 26698 timestamp: 23.809 Taking pizza out: 2 Pizzas in the oven: 0
+Pid: 26698 timestamp: 23.809 Putting pizza on the table: 2 Pizzas on the table: 4
+Pid: 26698 timestamp: 23.809 Preparing the pizza: 7
+Pid: 26701 timestamp: 23.863 Taking pizza from the table: 8 Pizzas on the table: 3
+Pid: 26700 timestamp: 23.863 Taking pizza from the table: 8 Pizzas on the table: 2
+Pid: 26699 timestamp: 25.089 Baking the pizza: 7 Pizzas in the oven: 1
+Pid: 26698 timestamp: 25.089 Baking the pizza: 7 Pizzas in the oven: 2
+Pid: 26700 timestamp: 28.477 Giving pizza to the customer: 8
+Pid: 26701 timestamp: 28.477 Giving pizza to the customer: 8
+Pid: 26699 timestamp: 29.418 Taking pizza out: 7 Pizzas in the oven: 1
+Pid: 26699 timestamp: 29.419 Putting pizza on the table: 7 Pizzas on the table: 3
+Pid: 26699 timestamp: 29.419 Preparing the pizza: 3
+Pid: 26698 timestamp: 29.419 Taking pizza out: 7 Pizzas in the oven: 0
+Pid: 26698 timestamp: 29.419 Putting pizza on the table: 7 Pizzas on the table: 4
+Pid: 26698 timestamp: 29.419 Preparing the pizza: 3
+Pid: 26699 timestamp: 30.473 Baking the pizza: 3 Pizzas in the oven: 1
+Pid: 26698 timestamp: 30.473 Baking the pizza: 3 Pizzas in the oven: 2
+Pid: 26700 timestamp: 32.485 Taking pizza from the table: 2 Pizzas on the table: 3
+Pid: 26701 timestamp: 32.485 Taking pizza from the table: 2 Pizzas on the table: 2
+Pid: 26699 timestamp: 35.039 Taking pizza out: 3 Pizzas in the oven: 1
+Pid: 26699 timestamp: 35.039 Putting pizza on the table: 3 Pizzas on the table: 3
+Pid: 26699 timestamp: 35.039 Preparing the pizza: 6
+Pid: 26698 timestamp: 35.040 Taking pizza out: 3 Pizzas in the oven: 0
+Pid: 26698 timestamp: 35.040 Putting pizza on the table: 3 Pizzas on the table: 4
+Pid: 26698 timestamp: 35.040 Preparing the pizza: 6
+Pid: 26700 timestamp: 36.529 Giving pizza to the customer: 2
+Pid: 26701 timestamp: 36.529 Giving pizza to the customer: 2
+Pid: 26699 timestamp: 36.532 Baking the pizza: 6 Pizzas in the oven: 1
+Pid: 26698 timestamp: 36.532 Baking the pizza: 6 Pizzas in the oven: 2
+Pid: 26699 timestamp: 41.477 Taking pizza out: 6 Pizzas in the oven: 1
+Pid: 26699 timestamp: 41.477 Putting pizza on the table: 6 Pizzas on the table: 5
+Pid: 26699 timestamp: 41.477 Preparing the pizza: 6
+Pid: 26698 timestamp: 41.478 Taking pizza out: 6 Pizzas in the oven: 0
+Pid: 26701 timestamp: 41.483 Taking pizza from the table: 7 Pizzas on the table: 4
+Pid: 26700 timestamp: 41.483 Taking pizza from the table: 7 Pizzas on the table: 3
+Pid: 26698 timestamp: 41.561 Putting pizza on the table: 6 Pizzas on the table: 4
+Pid: 26698 timestamp: 41.561 Preparing the pizza: 6
+Pid: 26699 timestamp: 42.687 Baking the pizza: 6 Pizzas in the oven: 1
+Pid: 26698 timestamp: 43.006 Baking the pizza: 6 Pizzas in the oven: 2
+Pid: 26700 timestamp: 46.079 Giving pizza to the customer: 7
+Pid: 26701 timestamp: 46.079 Giving pizza to the customer: 7
+Pid: 26699 timestamp: 47.133 Taking pizza out: 6 Pizzas in the oven: 1
+Pid: 26699 timestamp: 47.133 Putting pizza on the table: 6 Pizzas on the table: 5
+Pid: 26699 timestamp: 47.133 Preparing the pizza: 7
+Pid: 26698 timestamp: 47.212 Taking pizza out: 6 Pizzas in the oven: 0
+Pid: 26699 timestamp: 48.338 Baking the pizza: 7 Pizzas in the oven: 1
+Pid: 26701 timestamp: 50.463 Taking pizza from the table: 3 Pizzas on the table: 4
+Pid: 26700 timestamp: 50.463 Taking pizza from the table: 3 Pizzas on the table: 3
+Pid: 26698 timestamp: 50.492 Putting pizza on the table: 6 Pizzas on the table: 4
+Pid: 26698 timestamp: 50.492 Preparing the pizza: 5
+Pid: 26698 timestamp: 52.132 Baking the pizza: 5 Pizzas in the oven: 2
+Pid: 26699 timestamp: 52.343 Taking pizza out: 7 Pizzas in the oven: 1
+Pid: 26699 timestamp: 52.343 Putting pizza on the table: 7 Pizzas on the table: 5
+Pid: 26699 timestamp: 52.343 Preparing the pizza: 7
+Pid: 26699 timestamp: 53.893 Baking the pizza: 7 Pizzas in the oven: 2
+Pid: 26700 timestamp: 54.592 Giving pizza to the customer: 3
+Pid: 26701 timestamp: 54.593 Giving pizza to the customer: 3
+Pid: 26698 timestamp: 57.053 Taking pizza out: 5 Pizzas in the oven: 1
+Pid: 26699 timestamp: 58.804 Taking pizza out: 7 Pizzas in the oven: 0
+Pid: 26701 timestamp: 58.821 Taking pizza from the table: 6 Pizzas on the table: 4
+Pid: 26700 timestamp: 58.821 Taking pizza from the table: 6 Pizzas on the table: 3
+Pid: 26698 timestamp: 58.849 Putting pizza on the table: 5 Pizzas on the table: 4
+Pid: 26698 timestamp: 58.849 Preparing the pizza: 1
+Pid: 26699 timestamp: 58.853 Putting pizza on the table: 7 Pizzas on the table: 5
+Pid: 26699 timestamp: 58.853 Preparing the pizza: 8
+Pid: 26699 timestamp: 60.273 Baking the pizza: 8 Pizzas in the oven: 1
+Pid: 26698 timestamp: 60.768 Baking the pizza: 1 Pizzas in the oven: 2
+Pid: 26700 timestamp: 62.920 Giving pizza to the customer: 6
+Pid: 26701 timestamp: 62.920 Giving pizza to the customer: 6
+Pid: 26699 timestamp: 64.329 Taking pizza out: 8 Pizzas in the oven: 1
+Pid: 26698 timestamp: 65.533 Taking pizza out: 1 Pizzas in the oven: 0
+Pid: 26700 timestamp: 67.067 Taking pizza from the table: 6 Pizzas on the table: 4
+Pid: 26701 timestamp: 67.067 Taking pizza from the table: 6 Pizzas on the table: 3
+Pid: 26699 timestamp: 67.068 Putting pizza on the table: 8 Pizzas on the table: 4
+Pid: 26699 timestamp: 67.068 Preparing the pizza: 2
+Pid: 26698 timestamp: 67.078 Putting pizza on the table: 1 Pizzas on the table: 5
+Pid: 26698 timestamp: 67.078 Preparing the pizza: 1
+Pid: 26699 timestamp: 68.437 Baking the pizza: 2 Pizzas in the oven: 1
+Pid: 26698 timestamp: 68.552 Baking the pizza: 1 Pizzas in the oven: 2
+Pid: 26701 timestamp: 71.403 Giving pizza to the customer: 6
+Pid: 26700 timestamp: 71.403 Giving pizza to the customer: 6
+Pid: 26699 timestamp: 72.838 Taking pizza out: 2 Pizzas in the oven: 1
+Pid: 26698 timestamp: 73.080 Taking pizza out: 1 Pizzas in the oven: 0
+Pid: 26701 timestamp: 75.517 Taking pizza from the table: 7 Pizzas on the table: 4
+Pid: 26700 timestamp: 75.518 Taking pizza from the table: 5 Pizzas on the table: 3
+Pid: 26698 timestamp: 75.519 Putting pizza on the table: 1 Pizzas on the table: 4
+Pid: 26698 timestamp: 75.519 Preparing the pizza: 2
+
+
+
+Dla N = 6 i M = 6:
+Widac, ze programy dzialaja poprawnie. Piekarnik i stolik sa poczatkowo cyklicznie hurtowo zapelniane, a nastepnie oprozniane.
+Po kilku iteracjach dochodzi do "desynchronizacji", nie przeszkadza to jednak programowi w dzialaniu.
+
+Pid: 26091 timestamp: 2.408 Baking the pizza: 5 Pizzas in the oven: 1
+Pid: 26092 timestamp: 2.410 Baking the pizza: 5 Pizzas in the oven: 2
+Pid: 26093 timestamp: 2.411 Baking the pizza: 5 Pizzas in the oven: 3
+Pid: 26095 timestamp: 2.411 Baking the pizza: 5 Pizzas in the oven: 4
+Pid: 26094 timestamp: 2.411 Baking the pizza: 5 Pizzas in the oven: 5
+Pid: 26091 timestamp: 6.512 Taking pizza out: 5 Pizzas in the oven: 4
+Pid: 26091 timestamp: 6.512 Putting pizza on the table: 5 Pizzas on the table: 1
+Pid: 26091 timestamp: 6.512 Preparing the pizza: 1
+Pid: 26092 timestamp: 6.515 Taking pizza out: 5 Pizzas in the oven: 3
+Pid: 26092 timestamp: 6.515 Putting pizza on the table: 5 Pizzas on the table: 2
+Pid: 26092 timestamp: 6.515 Preparing the pizza: 1
+Pid: 26093 timestamp: 6.515 Taking pizza out: 5 Pizzas in the oven: 2
+Pid: 26093 timestamp: 6.515 Putting pizza on the table: 5 Pizzas on the table: 3
+Pid: 26093 timestamp: 6.515 Preparing the pizza: 1
+Pid: 26094 timestamp: 6.515 Taking pizza out: 5 Pizzas in the oven: 1
+Pid: 26094 timestamp: 6.515 Putting pizza on the table: 5 Pizzas on the table: 4
+Pid: 26094 timestamp: 6.516 Preparing the pizza: 1
+Pid: 26095 timestamp: 6.516 Taking pizza out: 5 Pizzas in the oven: 0
+Pid: 26095 timestamp: 6.516 Putting pizza on the table: 5 Pizzas on the table: 5
+Pid: 26095 timestamp: 6.516 Preparing the pizza: 1
+Pid: 26100 timestamp: 6.517 Taking pizza from the table: 5 Pizzas on the table: 4
+Pid: 26099 timestamp: 6.517 Taking pizza from the table: 5 Pizzas on the table: 3
+Pid: 26098 timestamp: 6.517 Taking pizza from the table: 5 Pizzas on the table: 2
+Pid: 26096 timestamp: 6.517 Taking pizza from the table: 5 Pizzas on the table: 1
+Pid: 26101 timestamp: 6.517 Taking pizza from the table: 5 Pizzas on the table: 0
+Pid: 26090 timestamp: 6.528 Baking the pizza: 5 Pizzas in the oven: 1
+Pid: 26091 timestamp: 8.457 Baking the pizza: 1 Pizzas in the oven: 2
+Pid: 26092 timestamp: 8.459 Baking the pizza: 1 Pizzas in the oven: 3
+Pid: 26093 timestamp: 8.460 Baking the pizza: 1 Pizzas in the oven: 4
+Pid: 26094 timestamp: 8.460 Baking the pizza: 1 Pizzas in the oven: 5
+Pid: 26090 timestamp: 11.038 Taking pizza out: 5 Pizzas in the oven: 4
+Pid: 26090 timestamp: 11.038 Putting pizza on the table: 5 Pizzas on the table: 1
+Pid: 26090 timestamp: 11.038 Preparing the pizza: 4
+Pid: 26095 timestamp: 11.057 Baking the pizza: 1 Pizzas in the oven: 5
+Pid: 26097 timestamp: 11.067 Taking pizza from the table: 5 Pizzas on the table: 0
+Pid: 26100 timestamp: 11.340 Giving pizza to the customer: 5
+Pid: 26099 timestamp: 11.340 Giving pizza to the customer: 5
+Pid: 26096 timestamp: 11.341 Giving pizza to the customer: 5
+Pid: 26098 timestamp: 11.341 Giving pizza to the customer: 5
+Pid: 26101 timestamp: 11.341 Giving pizza to the customer: 5
+Pid: 26091 timestamp: 13.364 Taking pizza out: 1 Pizzas in the oven: 4
+Pid: 26091 timestamp: 13.364 Putting pizza on the table: 1 Pizzas on the table: 1
+Pid: 26091 timestamp: 13.364 Preparing the pizza: 0
+Pid: 26092 timestamp: 13.367 Taking pizza out: 1 Pizzas in the oven: 3
+Pid: 26092 timestamp: 13.367 Putting pizza on the table: 1 Pizzas on the table: 2
+Pid: 26092 timestamp: 13.367 Preparing the pizza: 0
+Pid: 26093 timestamp: 13.367 Taking pizza out: 1 Pizzas in the oven: 2
+Pid: 26093 timestamp: 13.367 Putting pizza on the table: 1 Pizzas on the table: 3
+Pid: 26093 timestamp: 13.367 Preparing the pizza: 0
+Pid: 26094 timestamp: 13.368 Taking pizza out: 1 Pizzas in the oven: 1
+Pid: 26094 timestamp: 13.368 Putting pizza on the table: 1 Pizzas on the table: 4
+Pid: 26094 timestamp: 13.368 Preparing the pizza: 0
+Pid: 26090 timestamp: 13.385 Baking the pizza: 4 Pizzas in the oven: 2
+Pid: 26097 timestamp: 15.070 Giving pizza to the customer: 5
+Pid: 26095 timestamp: 15.146 Taking pizza out: 1 Pizzas in the oven: 1
+Pid: 26095 timestamp: 15.146 Putting pizza on the table: 1 Pizzas on the table: 5
+Pid: 26095 timestamp: 15.146 Preparing the pizza: 9
+Pid: 26091 timestamp: 15.150 Baking the pizza: 0 Pizzas in the oven: 2
+Pid: 26092 timestamp: 15.152 Baking the pizza: 0 Pizzas in the oven: 3
+Pid: 26093 timestamp: 15.153 Baking the pizza: 0 Pizzas in the oven: 4
+Pid: 26094 timestamp: 15.153 Baking the pizza: 0 Pizzas in the oven: 5
+Pid: 26100 timestamp: 16.333 Taking pizza from the table: 1 Pizzas on the table: 4
+Pid: 26099 timestamp: 16.333 Taking pizza from the table: 1 Pizzas on the table: 3
+Pid: 26096 timestamp: 16.333 Taking pizza from the table: 1 Pizzas on the table: 2
+Pid: 26098 timestamp: 16.333 Taking pizza from the table: 1 Pizzas on the table: 1
+Pid: 26101 timestamp: 16.333 Taking pizza from the table: 1 Pizzas on the table: 0
+Pid: 26090 timestamp: 18.319 Taking pizza out: 4 Pizzas in the oven: 4
+Pid: 26090 timestamp: 18.319 Putting pizza on the table: 4 Pizzas on the table: 1
+Pid: 26090 timestamp: 18.319 Preparing the pizza: 9
+Pid: 26095 timestamp: 18.337 Baking the pizza: 9 Pizzas in the oven: 5
+Pid: 26091 timestamp: 19.678 Taking pizza out: 0 Pizzas in the oven: 4
+Pid: 26091 timestamp: 19.678 Putting pizza on the table: 0 Pizzas on the table: 2
+Pid: 26091 timestamp: 19.678 Preparing the pizza: 3
+Pid: 26090 timestamp: 19.679 Baking the pizza: 9 Pizzas in the oven: 5
+Pid: 26092 timestamp: 19.680 Taking pizza out: 0 Pizzas in the oven: 4
+Pid: 26092 timestamp: 19.680 Putting pizza on the table: 0 Pizzas on the table: 3
+Pid: 26092 timestamp: 19.680 Preparing the pizza: 3
+Pid: 26093 timestamp: 19.680 Taking pizza out: 0 Pizzas in the oven: 3
+Pid: 26093 timestamp: 19.680 Putting pizza on the table: 0 Pizzas on the table: 4
+Pid: 26093 timestamp: 19.680 Preparing the pizza: 3
+Pid: 26094 timestamp: 19.681 Taking pizza out: 0 Pizzas in the oven: 2
+Pid: 26094 timestamp: 19.681 Putting pizza on the table: 0 Pizzas on the table: 5
+Pid: 26094 timestamp: 19.681 Preparing the pizza: 3
+Pid: 26097 timestamp: 19.956 Taking pizza from the table: 4 Pizzas on the table: 4
+Pid: 26100 timestamp: 21.206 Giving pizza to the customer: 1
+Pid: 26098 timestamp: 21.206 Giving pizza to the customer: 1
+Pid: 26096 timestamp: 21.206 Giving pizza to the customer: 1
+Pid: 26101 timestamp: 21.206 Giving pizza to the customer: 1
+Pid: 26099 timestamp: 21.206 Giving pizza to the customer: 1
+Pid: 26091 timestamp: 21.441 Baking the pizza: 3 Pizzas in the oven: 3
+Pid: 26092 timestamp: 21.443 Baking the pizza: 3 Pizzas in the oven: 4
+Pid: 26093 timestamp: 21.444 Baking the pizza: 3 Pizzas in the oven: 5
+Pid: 26095 timestamp: 22.433 Taking pizza out: 9 Pizzas in the oven: 4
+Pid: 26095 timestamp: 22.433 Putting pizza on the table: 9 Pizzas on the table: 5
+Pid: 26095 timestamp: 22.433 Preparing the pizza: 3
+Pid: 26094 timestamp: 22.464 Baking the pizza: 3 Pizzas in the oven: 5
+Pid: 26097 timestamp: 23.991 Giving pizza to the customer: 4
+Pid: 26090 timestamp: 24.035 Taking pizza out: 9 Pizzas in the oven: 4
+Pid: 26095 timestamp: 24.112 Baking the pizza: 3 Pizzas in the oven: 5
+Pid: 26091 timestamp: 25.662 Taking pizza out: 3 Pizzas in the oven: 4
+Pid: 26092 timestamp: 25.664 Taking pizza out: 3 Pizzas in the oven: 3
+Pid: 26093 timestamp: 25.665 Taking pizza out: 3 Pizzas in the oven: 2
+Pid: 26100 timestamp: 26.141 Taking pizza from the table: 0 Pizzas on the table: 4
+Pid: 26098 timestamp: 26.142 Taking pizza from the table: 0 Pizzas on the table: 3
+Pid: 26096 timestamp: 26.142 Taking pizza from the table: 0 Pizzas on the table: 2
+Pid: 26101 timestamp: 26.142 Taking pizza from the table: 0 Pizzas on the table: 1
+Pid: 26099 timestamp: 26.142 Taking pizza from the table: 9 Pizzas on the table: 0
+Pid: 26091 timestamp: 26.192 Putting pizza on the table: 3 Pizzas on the table: 1
+Pid: 26091 timestamp: 26.192 Preparing the pizza: 9
+Pid: 26093 timestamp: 26.193 Putting pizza on the table: 3 Pizzas on the table: 2
+Pid: 26093 timestamp: 26.193 Preparing the pizza: 9
+Pid: 26092 timestamp: 26.193 Putting pizza on the table: 3 Pizzas on the table: 3
+Pid: 26092 timestamp: 26.193 Preparing the pizza: 9
+Pid: 26090 timestamp: 26.203 Putting pizza on the table: 9 Pizzas on the table: 4
+Pid: 26090 timestamp: 26.203 Preparing the pizza: 6
+Pid: 26094 timestamp: 26.862 Taking pizza out: 3 Pizzas in the oven: 1
+Pid: 26094 timestamp: 26.862 Putting pizza on the table: 3 Pizzas on the table: 5
+Pid: 26094 timestamp: 26.862 Preparing the pizza: 3
+Pid: 26091 timestamp: 27.371 Baking the pizza: 9 Pizzas in the oven: 2
+Pid: 26093 timestamp: 27.372 Baking the pizza: 9 Pizzas in the oven: 3
+Pid: 26092 timestamp: 27.372 Baking the pizza: 9 Pizzas in the oven: 4
+Pid: 26090 timestamp: 27.513 Baking the pizza: 6 Pizzas in the oven: 5
+Pid: 26095 timestamp: 28.437 Taking pizza out: 3 Pizzas in the oven: 4
+Pid: 26094 timestamp: 28.505 Baking the pizza: 3 Pizzas in the oven: 5
+Pid: 26097 timestamp: 28.968 Taking pizza from the table: 9 Pizzas on the table: 4
+Pid: 26095 timestamp: 29.002 Putting pizza on the table: 3 Pizzas on the table: 5
+Pid: 26095 timestamp: 29.002 Preparing the pizza: 8
